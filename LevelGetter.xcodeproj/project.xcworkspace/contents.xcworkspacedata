@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../Exercise.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../ExFinder/ExFinder/Exercise.swift">
+   </FileRef>
+   <FileRef
       location = "self:LevelGetter.xcodeproj">
    </FileRef>
 </Workspace>

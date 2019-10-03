@@ -25,6 +25,16 @@
 /* Begin PBXFileReference section */
 		ED64FD452345B3970090141F /* LevelGetter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LevelGetter; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED64FD482345B3970090141F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		ED64FD5C2345B41C0090141F /* Stretching.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Stretching.json; sourceTree = "<group>"; };
+		ED64FD5D2345B41C0090141F /* ExerciseTypes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExerciseTypes.json; sourceTree = "<group>"; };
+		ED64FD5E2345B41C0090141F /* compound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = compound.json; sourceTree = "<group>"; };
+		ED64FD5F2345B41C0090141F /* cardio.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardio.json; sourceTree = "<group>"; };
+		ED64FD602345B41C0090141F /* powerlifting.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = powerlifting.json; sourceTree = "<group>"; };
+		ED64FD612345B41C0090141F /* isolation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = isolation.json; sourceTree = "<group>"; };
+		ED64FD622345B41D0090141F /* All_Exercises.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = All_Exercises.json; sourceTree = "<group>"; };
+		ED64FD632345B41D0090141F /* Equipment.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Equipment.json; sourceTree = "<group>"; };
+		ED64FD642345B41D0090141F /* Strength.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Strength.json; sourceTree = "<group>"; };
+		ED64FD652345B41D0090141F /* MuscleTypes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MuscleTypes.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +67,27 @@
 		ED64FD472345B3970090141F /* LevelGetter */ = {
 			isa = PBXGroup;
 			children = (
+				ED64FD622345B41D0090141F /* All_Exercises.json */,
+				ED64FD5B2345B41C0090141F /* JSON */,
 				ED64FD482345B3970090141F /* main.swift */,
 			);
 			path = LevelGetter;
+			sourceTree = "<group>";
+		};
+		ED64FD5B2345B41C0090141F /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				ED64FD5F2345B41C0090141F /* cardio.json */,
+				ED64FD5E2345B41C0090141F /* compound.json */,
+				ED64FD632345B41D0090141F /* Equipment.json */,
+				ED64FD5D2345B41C0090141F /* ExerciseTypes.json */,
+				ED64FD612345B41C0090141F /* isolation.json */,
+				ED64FD652345B41D0090141F /* MuscleTypes.json */,
+				ED64FD602345B41C0090141F /* powerlifting.json */,
+				ED64FD642345B41D0090141F /* Strength.json */,
+				ED64FD5C2345B41C0090141F /* Stretching.json */,
+			);
+			path = JSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
