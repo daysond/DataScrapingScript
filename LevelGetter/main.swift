@@ -16,7 +16,7 @@ class Exercise: Codable {
     let equipmentType: String
     let muscleTargeted: String
     let rating: Double
-    var level: String = ""
+    var level: String = "NA"
     
     init?(withJSONResult json: [String: Any]) {
         guard let imageLinkOne = json["Image_URL_One"] as? String else { print("init one failed"); return nil }
@@ -37,7 +37,7 @@ class Exercise: Codable {
         self.name = name
         self.equipmentType = equiment
         self.muscleTargeted = muscle
-
+        
     }
     
     
@@ -51,29 +51,103 @@ extension Exercise: Comparable {
     static func == (lhs: Exercise, rhs: Exercise) -> Bool {
         lhs.name == rhs.name
     }
-    
 }
 
 var exercises: [Exercise] = []
-let path = "/Users/daysondong/desktop/All_Exercises.json"
+
+let path = "/Users/dsn/desktop/BBData/cardio.json"
 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
 let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
 
+var succeedCount = 0
+
+func encodeData() {
+    
+    let encoder = JSONEncoder()
+    do {
+        let data = try JSONSerialization.data(withJSONObject: exercises, options: [])
+        let jsonString = String(data: data, encoding: .utf8)
+        print(jsonString)
+    } catch  {
+        
+    }
+    
+    
+}
+
 if let exercisesArray = jsonResult as? [[String: Any]]  {
+    
+    
     exercisesArray.forEach { (ex) in
         
         if let exercise = Exercise(withJSONResult: ex) {
-            exercises.append(exercise)
-            print(exercise.name)
-            
+            if  !exercises.contains(exercise) {
+                exercises.append(exercise)
+            }
+        }
+    }
+    
+    print("Found \(exercises.count) exercises\n")
+    
+    if exercises.count != 0 {
+        print("About to get HTML of \(exercises.count) exercises")
+        
+        let group = DispatchGroup()
+        exercises.forEach { (ex) in
+            group.enter()
+            if let url = URL(string: ex.mainURL) {
+                let request = URLRequest(url: url)
+                
+                DispatchQueue.main.async {
+                    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                        
+                        guard error == nil else {
+                            print(error!.localizedDescription)
+                            return
+                        }
+                        guard response != nil else {
+                            print("no response")
+                            return
+                        }
+                        
+                        guard let data = data else {
+                            print("no data")
+                            return
+                        }
+                        //                    print("getting \(index)/\(exercises.count)")
+                        if let html  = String(data: data, encoding: .utf8) {
+                            let testPattern = "level:[\n]*[ ]+[a-zA-Z]+[\n]"
+                            let res = html.range(of: testPattern, options:[.regularExpression, .caseInsensitive])
+                            if res != nil {
+                                let trimmed = html[res!].replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "Level:", with: "").replacingOccurrences(of: "\n", with: "")
+                                ex.level = trimmed
+                                succeedCount = succeedCount + 1
+                                print("Succeed! \(ex.name) level: \(ex.level)")
+                            } else {
+                                ex.level = "N/A"
+                                print("Failed.")
+                            }
+                        }
+                        group.leave()
+                    }
+                    task.resume()
+                }
+            } else {
+                print("NO URL of \(ex.name)")
+            }
         }
         
+        group.notify(queue: DispatchQueue.main) {
+            encodeData()
+            exit(EXIT_SUCCESS)
+        }
+        dispatchMain()
     }
-    print(exercises.count)
-    
 } else {
     print("no json result")
 }
+
+
 
 
 
